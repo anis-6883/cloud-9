@@ -1,0 +1,60 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Default Dark Modern",
+  "editor.fontSize": 17,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.printWidth": 140,
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.endOfLine": "lf",
+  "prettier.proseWrap": "never",
+  "prettier.arrowParens": "avoid",
+  "prettier.bracketSpacing": true,
+  "prettier.semi": true,
+  "prettier.trailingComma": "none",
+  "prettier.htmlWhitespaceSensitivity": "ignore",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#44284E",
+    "activityBar.background": "#44284E",
+    "activityBar.foreground": "#ffffff",
+    "activityBar.inactiveForeground": "#ffffff99",
+    "activityBarBadge.background": "#A43A3B",
+    "activityBarBadge.foreground": "#ffffff",
+    "commandCenter.border": "#ffffff99",
+    "sash.hoverBorder": "#44284E",
+    "statusBar.background": "#44284E",
+    "statusBar.foreground": "#ffffff",
+    "statusBarItem.hoverBackground": "#44284E",
+    "statusBarItem.remoteBackground": "#44284E",
+    "statusBarItem.remoteForeground": "#ffffff",
+    "titleBar.activeBackground": "#44284E",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveBackground": "#44284E",
+    "titleBar.inactiveForeground": "#ffffff99"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "css.validate": false,
+  "tailwindCSS.emmetCompletions": false,
+  "explorer.confirmDelete": false,
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.fontFamily": "'Fira Code', monospace",
+  "editor.mouseWheelZoom": true,
+  "files.associations": {
+    "*.html": "html"
+  },
+  "explorer.confirmDragAndDrop": false,
+  "workbench.startupEditor": "none",
+  "editor.guides.bracketPairs": true,
+  "terminal.integrated.fontSize": 16,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.zoomLevel": 1
+}
