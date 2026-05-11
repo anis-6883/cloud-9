@@ -19,16 +19,29 @@ export const {
         password: {}
       },
       authorize: async credentials => {
-        // Mock authorization: Replace with actual database lookup
-        if (credentials?.email === "test@example.com" && credentials?.password === "password123") {
-          return {
-            id: "1",
-            name: "Test User",
-            email: "test@example.com"
-          };
+        try {
+          const res = await fetch("http://localhost:3000/api/demo-login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              email: credentials?.email,
+              password: credentials?.password
+            })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            return null;
+          }
+
+          return data.data;
+        } catch (error) {
+          console.error(error);
+          return null;
         }
-        // If validation fails, return null
-        return null;
       }
     })
   ],
@@ -36,9 +49,16 @@ export const {
     // Custom sign-in page if needed, for now we will just use the default or modal
   },
   callbacks: {
-    authorized: async ({ auth }) => {
-      // Logged in users are authenticated, otherwise false
-      return !!auth;
+    async jwt({ token, user }) {
+      if (user) {
+        token.accessToken = user.token;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.user.accessToken = token.accessToken as string;
+      return session;
     }
   },
 

@@ -47,10 +47,19 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       setErrors({});
 
       if (mode === "login") {
-        // Handle login
         const loginData = data as LoginFormData;
-        console.log("Login:", loginData);
-        //login API
+
+        const res = await signIn("credentials", {
+          redirect: false, // important (modal এর জন্য)
+          email: loginData.email,
+          password: loginData.password
+        });
+
+        if (res?.error) {
+          setErrors({ general: "Invalid email or password" });
+        } else {
+          onClose(); // modal close
+        }
       } else {
         const registerData = data as RegisterFormData;
         console.log("Register:", registerData);
