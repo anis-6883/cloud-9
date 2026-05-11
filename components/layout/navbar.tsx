@@ -2,14 +2,18 @@
 
 import { useAuth } from "@/hooks/use-auth";
 import { useSearch } from "@/hooks/use-search";
-import { Package, Search, User, Utensils } from "lucide-react";
+import { LogOut, Package, Search, User, Utensils } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
 export function Navbar() {
   const { searchQuery, setSearchQuery } = useSearch();
   const { openAuthModal } = useAuth();
+  const { data: session } = useSession();
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+  console.log("Session data in Navbar:", session);
 
   return (
     <nav className='bg-card/95 backdrop-blur-sm border-b border-border'>
@@ -51,13 +55,23 @@ export function Navbar() {
             <Package size={18} />
             Orders
           </Link>
-          <button
-            onClick={openAuthModal}
-            className='px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg font-semibold transition-colors flex items-center gap-2'
-          >
-            <User size={18} />
-            Login
-          </button>
+          {session ? (
+            <button
+              onClick={() => signOut()}
+              className='px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors flex items-center gap-2 cursor-pointer'
+            >
+              <LogOut size={18} />
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={openAuthModal}
+              className='px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg font-semibold transition-colors flex items-center gap-2 cursor-pointer'
+            >
+              <User size={18} />
+              Login
+            </button>
+          )}
         </div>
       </div>
     </nav>

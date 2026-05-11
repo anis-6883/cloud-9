@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { SessionProvider } from 'next-auth/react'
 import { SearchProvider } from '@/lib/context/search-context'
 import { CartProvider } from '@/lib/context/cart-context'
 import { AuthProvider } from '@/lib/context/auth-context'
@@ -40,13 +41,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased bg-background text-foreground">
-        <SearchProvider>
-          <CartProvider>
-            <AuthProvider>
-              {children}
-            </AuthProvider>
-          </CartProvider>
-        </SearchProvider>
+        <SessionProvider>
+          <SearchProvider>
+            <CartProvider>
+              <AuthProvider>
+                {children}
+              </AuthProvider>
+            </CartProvider>
+          </SearchProvider>
+        </SessionProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
