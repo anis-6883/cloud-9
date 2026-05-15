@@ -11,7 +11,7 @@ import InputField from "../ui/form/input-feild";
 
 const adminLoginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
-  password: z.string().min(5, "Password must be at least 5 characters")
+  password: z.string().min(1, "Password is required")
 });
 
 type AdminLoginFormData = z.infer<typeof adminLoginSchema>;
@@ -45,7 +45,7 @@ export default function AdminLoginForm() {
               name='email'
               label='Email'
               type='email'
-              placeholder='admin@example.com'
+              placeholder='e.g., john@gmail.com'
               inputClassName='bg-[#0b2d3d] text-white border-white/10'
             />
 
@@ -53,7 +53,7 @@ export default function AdminLoginForm() {
               name='password'
               label='Password'
               type='password'
-              placeholder='••••••••'
+              placeholder='Password'
               inputClassName='bg-[#0b2d3d] text-white border-white/10'
             />
 

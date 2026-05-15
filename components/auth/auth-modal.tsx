@@ -140,7 +140,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     name='email'
                     label='Email'
                     type='email'
-                    placeholder='Email address'
+                    placeholder='e.g., john@gmail.com'
                     prefixIconClassName='text-black'
                     inputClassName='bg-white text-black'
                   />
