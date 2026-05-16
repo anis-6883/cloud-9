@@ -156,10 +156,10 @@ export default function InputField({
               <button
                 type='button'
                 onClick={() => setShowPassword(prev => !prev)}
-                className='absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 hover:text-white'
+                className='absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 cursor-pointer'
                 tabIndex={-1}
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
               </button>
             ) : (
               suffixIcon && renderIconButton(suffixIcon, "right", onSuffixClick, suffixIconClassName)
