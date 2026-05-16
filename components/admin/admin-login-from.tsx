@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { Loader2, Utensils } from "lucide-react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -35,43 +35,36 @@ export default function AdminLoginForm() {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
-        <Card className='bg-[#071f2e]/80 backdrop-blur-xl border border-white/10 shadow-xl min-w-100 w-full'>
-          <CardHeader>
-            <CardTitle className='text-xl text-white text-center'>Admin Login</CardTitle>
+        <Card className=' backdrop-blur-xl border border-white/10 shadow-xl min-w-100 w-full'>
+          <CardHeader className='space-y-3 pb-1'>
+            {/* Logo Section */}
+            <div className='flex justify-center'>
+              {/* Reddish/Rose gradient matching Cloud 9's accents */}
+              <div className='w-12 h-12 bg-accent hover:bg-accent/90 rounded-full flex items-center justify-center shadow-md shadow-rose-500/20 transform rotate-6 hover:rotate-0 transition-transform duration-300'>
+                <span className='text-white font-bold transform -rotate-6 hover:rotate-0 transition-transform duration-300 cursor-pointer'>
+                  <Utensils size={22} />
+                </span>
+              </div>
+            </div>
+
+            {/* Text Section */}
+            <div className='space-y-1 text-center'>
+              <CardTitle className='text-2xl font-bold tracking-tight text-slate-800'>Admin Login</CardTitle>
+              <p className='text-sm text-slate-500 font-medium'>Welcome back! Please enter your credentials to access the panel.</p>
+            </div>
           </CardHeader>
 
           <CardContent className='space-y-4'>
-            <InputField
-              name='email'
-              label='Email'
-              type='email'
-              placeholder='e.g., john@gmail.com'
-              inputClassName='bg-[#0b2d3d] text-white border-white/10'
-            />
+            <InputField name='email' label='Email' type='email' placeholder='e.g., john@gmail.com' inputClassName='bg-transparent' />
 
-            <InputField
-              name='password'
-              label='Password'
-              type='password'
-              placeholder='Password'
-              inputClassName='bg-[#0b2d3d] text-white border-white/10'
-            />
+            <InputField name='password' label='Password' type='password' placeholder='Password' inputClassName='bg-transparent' />
 
             {error && <div className='text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-2'>{error}</div>}
 
             <button
               type='submit'
               disabled={isLoading}
-              className='
-                cursor-pointer
-                w-full rounded-xl py-2.5
-                bg-[#0b3a4a]
-                hover:bg-[#0e4b5f]
-                text-white font-semibold
-                transition-all
-                flex items-center justify-center gap-2
-                disabled:opacity-50
-              '
+              className='w-full bg-accent hover:bg-accent/90 disabled:bg-accent/50 text-accent-foreground font-semibold py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer'
             >
               {isLoading ? (
                 <>
