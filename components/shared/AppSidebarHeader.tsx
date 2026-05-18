@@ -13,11 +13,8 @@ export default function AppSidebarHeader({ teams }: any) {
     <SidebarMenu>
       <Link href={routes.privateRoutes.admin.dashboard}>
         <SidebarMenuItem>
-          <SidebarMenuButton
-            size='lg'
-            className='cursor-pointer hover:bg-transparent hover:text-black hover:shadow-none active:bg-transparent active:text-black dark:hover:text-white'
-          >
-            <div className='bg-primary text-sidebar-primary-foreground flex aspect-square size-10 items-center justify-center rounded-full'>
+          <SidebarMenuButton size='lg' className='cursor-pointer hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'>
+            <div className='bg-primary text-white flex aspect-square size-10 items-center justify-center rounded-full'>
               <Utensils size={20} />
             </div>
             <div className='grid flex-1 text-left text-sm leading-tight'>

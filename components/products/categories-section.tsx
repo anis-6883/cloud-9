@@ -20,8 +20,11 @@ export function CategoriesSection() {
   return (
     <div className='mb-8'>
       <div className='flex items-center justify-between mb-4'>
-        <h2 className='text-xl font-bold text-foreground'>Categories</h2>
-        <a href='#' className='text-accent hover:text-accent/80 text-sm font-medium transition-colors'>
+        <h2 className='text-xl font-bold text-heading'>Categories</h2>
+        <a
+          href='#'
+          className='text-accent hover:text-accent/80 dark:text-foreground hover:dark:text-foreground/80 text-sm font-medium transition-colors underline underline-offset-4'
+        >
           View More
         </a>
       </div>
@@ -31,14 +34,14 @@ export function CategoriesSection() {
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
             style={{ animationDelay: `${index * 50}ms` }}
-            className={`flex items-center gap-2 px-4 py-3 rounded-2xl whitespace-nowrap transition-all duration-200 shrink-0 animate-slide-in-up ${
+            className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-2xl whitespace-nowrap transition-all duration-200 shrink-0 animate-slide-in-up ${
               selectedCategory === category.id
                 ? "bg-accent text-accent-foreground"
-                : "bg-card text-foreground border border-border hover:border-accent"
+                : "bg-card text-foreground border border-border hover:border-accent dark:text-black"
             }`}
           >
-            <span className='text-lg'>{iconMap[category.icon]}</span>
-            <span className='text-sm font-medium'>{category.name}</span>
+            <span className='text-lg '>{iconMap[category.icon]}</span>
+            <span className='text-sm font-medium '>{category.name}</span>
           </button>
         ))}
       </div>

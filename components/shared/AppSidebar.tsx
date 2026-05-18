@@ -86,7 +86,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
   ];
 
   return (
-    <Sidebar collapsible='icon' {...props}>
+    <Sidebar className='bg-sidebar text-sidebar-foreground border-sidebar-border' collapsible='icon' {...props}>
       <SidebarHeader>
         <AppSidebarHeader teams={adminDashboardMenu.teams} />
       </SidebarHeader>
