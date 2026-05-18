@@ -114,7 +114,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
                 {/* Header */}
                 <CardHeader>
-                  <CardTitle className='text-2xl font-bold text-foreground mb-0'>
+                  <CardTitle className='text-2xl font-bold text-foreground dark:text-black mb-0'>
                     {mode === "login" ? "Welcome Back" : "Create Account"}
                   </CardTitle>
                   <CardDescription className='text-muted-foreground text-sm'>
