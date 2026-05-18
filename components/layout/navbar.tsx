@@ -6,6 +6,7 @@ import { LogOut, Package, Search, User, Utensils } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import ThemeSwitch from "../shared/ThemeSwitch";
 
 export function Navbar() {
   const { searchQuery, setSearchQuery } = useSearch();
@@ -16,16 +17,16 @@ export function Navbar() {
   console.log("Session data in Navbar:", session);
 
   return (
-    <nav className='bg-card/95 backdrop-blur-sm border-b border-border'>
+    <nav className='sticky top-0 z-50 bg-background/80 backdrop-blur border-b border-border text-foreground'>
       <div className='flex items-center justify-between px-6 py-4'>
         {/* Logo */}
         <div className='flex items-center gap-2'>
           <div className='w-10 h-10 bg-accent rounded-full flex items-center justify-center'>
-            <span className='text-accent-foreground font-bold text-lg'>
-              <Utensils size={20} />
+            <span className='text-white font-bold'>
+              <Utensils size={22} />
             </span>
           </div>
-          <h1 className='text-xl font-bold text-foreground'>Cloud 9</h1>
+          <h1 className='text-xl font-bold '>Cloud 9</h1>
         </div>
 
         {/* Search Bar */}
@@ -48,9 +49,10 @@ export function Navbar() {
 
         {/* Icons */}
         <div className='flex items-center gap-4'>
+          <ThemeSwitch />
           <Link
             href='/orders'
-            className='px-4 py-2 bg-secondary hover:bg-secondary/80 text-foreground rounded-lg font-semibold transition-colors flex items-center gap-2'
+            className='px-4 py-2 bg-secondary text-foreground dark:text-black rounded-lg font-semibold transition-colors flex items-center gap-2'
           >
             <Package size={18} />
             Orders

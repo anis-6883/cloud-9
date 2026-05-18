@@ -7,7 +7,7 @@ import UserMenu from "./UserMenu";
 
 export default function Header() {
   return (
-    <div className='sticky top-0 z-50 border-gray-300 bg-white dark:border-b dark:bg-[#18181C]'>
+    <div className='sticky top-0 z-50 border-b border-border bg-background text-foreground'>
       <header className='flex h-16 items-center justify-between px-6 shadow-sm'>
         <SidebarTrigger />
         <div className='flex items-center gap-2 md:gap-4'>

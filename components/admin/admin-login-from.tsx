@@ -55,7 +55,14 @@ export default function AdminLoginForm() {
           </CardHeader>
 
           <CardContent className='space-y-4'>
-            <InputField name='email' label='Email' type='email' placeholder='e.g., john@gmail.com' inputClassName='bg-transparent' />
+            <InputField
+              className='bg-white'
+              name='email'
+              label='Email'
+              type='email'
+              placeholder='e.g., john@gmail.com'
+              inputClassName='bg-transparent'
+            />
 
             <InputField name='password' label='Password' type='password' placeholder='Password' inputClassName='bg-transparent' />
 
