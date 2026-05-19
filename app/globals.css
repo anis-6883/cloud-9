@@ -6,6 +6,7 @@
 :root {
   --background: #f0f8fc;
   --foreground: #1a3a52;
+  --heading: #1f2937;
   --card: #ffffff;
   --card-foreground: #1a3a52;
   --popover: #ffffff;
@@ -29,19 +30,20 @@
   --chart-4: #06d6d0;
   --chart-5: #14b8a6;
   --radius: 1rem;
-  --sidebar: #f0f8fc;
-  --sidebar-foreground: #1a3a52;
-  --sidebar-primary: #0969da;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e8f4f8;
-  --sidebar-accent-foreground: #1a3a52;
-  --sidebar-border: #d0e8f2;
-  --sidebar-ring: #0969da;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f2937;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #111827;
+  --sidebar-border: #e5e7eb;
 }
 
 .dark {
-  --background: #f0f8fc;
-  --foreground: #1a3a52;
+  /* --background: #f0f8fc; */
+  /* --foreground: #1a3a52; */
+  --background: #0b1220;
+  /* --foreground: #1a3a52; */
+  --foreground: #ffffff;
+  --heading: #ffffff;
   --card: #ffffff;
   --card-foreground: #1a3a52;
   --popover: #ffffff;
@@ -64,14 +66,11 @@
   --chart-3: #0891b2;
   --chart-4: #06d6d0;
   --chart-5: #14b8a6;
-  --sidebar: #f0f8fc;
-  --sidebar-foreground: #1a3a52;
-  --sidebar-primary: #0969da;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e8f4f8;
-  --sidebar-accent-foreground: #1a3a52;
-  --sidebar-border: #d0e8f2;
-  --sidebar-ring: #0969da;
+  --sidebar: #18181c;
+  --sidebar-foreground: #e5e7eb;
+  --sidebar-accent: #242428;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2a2a2e;
 }
 
 @theme inline {
@@ -79,6 +78,7 @@
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
