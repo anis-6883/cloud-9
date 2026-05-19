@@ -51,13 +51,13 @@ export const {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.accessToken = user.token;
+        token.accessToken = (user as any).token;
       }
       return token;
     },
 
     async session({ session, token }) {
-      session.user.accessToken = token.accessToken as string;
+      (session.user as any).accessToken = token.accessToken as string;
       return session;
     }
   },

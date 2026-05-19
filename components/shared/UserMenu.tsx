@@ -34,7 +34,7 @@ export default function UserMenu() {
     });
     router.replace(routes.publicRoutes.adminLogin);
     Toast.success({ title: "Success", description: "Logout Successfully!" });
-    clearUserData();
+    // clearUserData();
   };
 
   const userData = {
