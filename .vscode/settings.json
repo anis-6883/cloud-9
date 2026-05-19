@@ -1,6 +1,5 @@
 {
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Dark Modern",
   "editor.fontSize": 17,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
@@ -21,22 +20,22 @@
     "source.organizeImports": "explicit"
   },
   "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#44284E",
-    "activityBar.background": "#44284E",
+    "activityBar.activeBackground": "#cf3c3e",
+    "activityBar.background": "#cf3c3e",
     "activityBar.foreground": "#ffffff",
     "activityBar.inactiveForeground": "#ffffff99",
     "activityBarBadge.background": "#A43A3B",
     "activityBarBadge.foreground": "#ffffff",
     "commandCenter.border": "#ffffff99",
-    "sash.hoverBorder": "#44284E",
-    "statusBar.background": "#44284E",
+    "sash.hoverBorder": "#cf3c3e",
+    "statusBar.background": "#cf3c3e",
     "statusBar.foreground": "#ffffff",
-    "statusBarItem.hoverBackground": "#44284E",
-    "statusBarItem.remoteBackground": "#44284E",
+    "statusBarItem.hoverBackground": "#cf3c3e",
+    "statusBarItem.remoteBackground": "#cf3c3e",
     "statusBarItem.remoteForeground": "#ffffff",
-    "titleBar.activeBackground": "#44284E",
+    "titleBar.activeBackground": "#cf3c3e",
     "titleBar.activeForeground": "#ffffff",
-    "titleBar.inactiveBackground": "#44284E",
+    "titleBar.inactiveBackground": "#cf3c3e",
     "titleBar.inactiveForeground": "#ffffff99"
   },
   "[typescriptreact]": {

@@ -1,7 +1,7 @@
 "use client";
 
+import { Product } from "@/data/products";
 import { useCart } from "@/hooks/use-cart";
-import { Product } from "@/lib/data/products";
 import { Minus, Plus, Star } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";

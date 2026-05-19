@@ -1,15 +1,15 @@
-import { ThemeProvider } from "@/components/theme-provider";
-import { AuthProvider } from "@/lib/context/auth-context";
-import { CartProvider } from "@/lib/context/cart-context";
-import { SearchProvider } from "@/lib/context/search-context";
-import { Analytics } from "@vercel/analytics/next";
+import { CartProvider } from "@/context/cart-context";
+import { SearchProvider } from "@/context/search-context";
+import AuthProvider from "@/provider/AuthProvider";
+import { ThemeProvider } from "@/provider/ThemeProvider";
 import type { Metadata } from "next";
-import { SessionProvider } from "next-auth/react";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const geist = Geist({
+  subsets: ["latin"]
+});
 
 export const metadata: Metadata = {
   title: "Food Store - Order Online",
@@ -40,20 +40,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className='font-sans antialiased bg-background text-foreground'>
-        <SessionProvider>
-          <SearchProvider>
-            <CartProvider>
-              <AuthProvider>
-                <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-                  {children}
-                </ThemeProvider>
-              </AuthProvider>
-            </CartProvider>
-          </SearchProvider>
-        </SessionProvider>
-        {process.env.NODE_ENV === "production" && <Analytics />}
+    <html lang='en' className={geist.className} suppressHydrationWarning>
+      <body className='font-sans antialiased bg-background text-foreground' suppressHydrationWarning>
+        <NextTopLoader color='#cf3c3e' showSpinner={false} />
+        <SearchProvider>
+          <CartProvider>
+            <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+              <AuthProvider>{children}</AuthProvider>
+            </ThemeProvider>
+          </CartProvider>
+        </SearchProvider>
       </body>
     </html>
   );

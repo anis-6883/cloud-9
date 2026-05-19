@@ -1,7 +1,7 @@
 "use client";
 
+import { categories } from "@/data/categories";
 import { useSearch } from "@/hooks/use-search";
-import { categories } from "@/lib/data/categories";
 import { Cake, Circle, CupSoda, Grid, Leaf, Sandwich, Utensils } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {
