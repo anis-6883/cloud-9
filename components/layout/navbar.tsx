@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@/hooks/use-auth";
 import { useSearch } from "@/hooks/use-search";
 import { LogOut, Package, Search, User, Utensils } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
@@ -10,7 +9,6 @@ import ThemeSwitch from "../shared/ThemeSwitch";
 
 export function Navbar() {
   const { searchQuery, setSearchQuery } = useSearch();
-  const { openAuthModal } = useAuth();
   const { data: session } = useSession();
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
@@ -67,7 +65,7 @@ export function Navbar() {
             </button>
           ) : (
             <button
-              onClick={openAuthModal}
+              onClick={() => {}}
               className='px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg font-semibold transition-colors flex items-center gap-2 cursor-pointer'
             >
               <User size={18} />

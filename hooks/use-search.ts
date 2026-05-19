@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useContext } from 'react';
-import { SearchContext } from '@/lib/context/search-context';
+import { SearchContext } from "@/context/search-context";
+import { useContext } from "react";
 
 export function useSearch() {
   const context = useContext(SearchContext);
   if (!context) {
-    throw new Error('useSearch must be used within a SearchProvider');
+    throw new Error("useSearch must be used within a SearchProvider");
   }
   return context;
 }

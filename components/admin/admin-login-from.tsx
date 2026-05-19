@@ -64,7 +64,7 @@ export default function AdminLoginForm() {
               inputClassName='bg-transparent'
             />
 
-            <InputField name='password' label='Password' type='password' placeholder='Password' inputClassName='bg-transparent' />
+            <InputField name='password' label='Password' type='password' placeholder='********' inputClassName='bg-transparent' />
 
             {error && <div className='text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-2'>{error}</div>}
 
