@@ -1,5 +1,7 @@
-import { ToastMessageTypes, ToastOptions } from "@/lib/types";
 import { toast as hotToast } from "react-hot-toast";
+
+export type ToastMessageTypes = string | { title?: string; description?: string; message?: string };
+export type ToastOptions = { duration?: number; id?: string; icon?: string };
 
 const Toast = {
   success: (message: ToastMessageTypes, options?: ToastOptions) => {

@@ -2,7 +2,9 @@ import AppSidebar from "@/components/shared/AppSidebar";
 import Header from "@/components/shared/Header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-export default function AdminDashboardLayout({ children }) {
+import { ReactNode } from "react";
+
+export default function AdminDashboardLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
