@@ -2,7 +2,7 @@ import { stringField } from "@/lib/utils";
 import mongoose, { Document, Schema } from "mongoose";
 import z from "zod";
 
-interface IAdmin extends Document {
+export interface IAdmin extends Document {
   name: string;
   email: string;
   password: string;
@@ -56,4 +56,3 @@ const AdminUpdateZodSchema = AdminZodSchema.partial();
 
 // Export
 export { Admin, AdminUpdateZodSchema, AdminZodSchema };
-export type { IAdmin };

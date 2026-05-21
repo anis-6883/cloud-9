@@ -25,7 +25,7 @@ export const initializeCloudinary = async () => {
     cloudinary.config({
       cloud_name: CLOUDINARY_CLOUD_NAME,
       api_key: CLOUDINARY_API_KEY,
-      api_secret: CLOUDINARY_API_SECRET,
+      api_secret: CLOUDINARY_API_SECRET
     });
 
     // Cache the configuration
@@ -34,7 +34,7 @@ export const initializeCloudinary = async () => {
       apiKey: CLOUDINARY_API_KEY!,
       apiSecret: CLOUDINARY_API_SECRET!,
       folderName: CLOUDINARY_FOLDER_NAME || "uploads",
-      secureUrlBase: CLOUDINARY_SECURE_URL_BASE!,
+      secureUrlBase: CLOUDINARY_SECURE_URL_BASE!
     };
 
     isConfigured = true;
@@ -62,7 +62,7 @@ export const uploadToCloudinary = async (
       .upload_stream(
         {
           resource_type: options?.resourceType || "image",
-          folder: options?.folder || folderName || "uploads",
+          folder: options?.folder || folderName || "uploads"
           // transformation: options?.transformation || [
           //   { width: 800, height: 800, crop: "limit" },
           //   { quality: "auto" },
@@ -75,7 +75,7 @@ export const uploadToCloudinary = async (
           } else if (result) {
             resolve({
               secure_url: result.secure_url,
-              public_id: result.public_id,
+              public_id: result.public_id
             });
           } else {
             reject(new Error("Upload failed"));
@@ -94,8 +94,9 @@ export const deleteFromCloudinary = async (
 
   try {
     const result = await cloudinary.uploader.destroy(publicId, {
-      resource_type: resourceType,
+      resource_type: resourceType
     });
+
     return result;
   } catch (error) {
     throw new Error(`Failed to delete asset: ${publicId}`);
@@ -110,7 +111,7 @@ export const deleteMultipleFromCloudinary = async (
 
   try {
     const result = await cloudinary.api.delete_resources(publicIds, {
-      resource_type: resourceType,
+      resource_type: resourceType
     });
     return result;
   } catch (error) {
