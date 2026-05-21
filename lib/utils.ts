@@ -1,3 +1,4 @@
+import { getCloudinaryFolderName } from "@/config/cloudinary";
 import { clsx, type ClassValue } from "clsx";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
@@ -7,6 +8,13 @@ import { StringFieldOptions } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export async function extractPublicId(url: string) {
+  const mainFolderName = await getCloudinaryFolderName();
+
+  const publicId = url.match(new RegExp(`${mainFolderName}/[^?]+`))?.[0]?.replace(/\.[^/.]+$/, "");
+  return publicId;
 }
 
 export const isRouteActive = (pathname: string, url: string) => {
@@ -116,3 +124,40 @@ export function extractRoutes(obj: NestedRoutes): string[] {
 
   return links;
 }
+
+export const extractFormData = <T extends Record<string, unknown> = Record<string, unknown>>(formData: FormData): T => {
+  const textData: Record<string, unknown> = {};
+  const arrays: Record<string, unknown[]> = {};
+
+  formData.forEach((value, key) => {
+    if (!(value instanceof File)) {
+      const arrayMatch = key.match(/^(.+)\[(\d+)\]\.?(.*)$/);
+
+      if (arrayMatch) {
+        const [, arrayName, index, nestedKey] = arrayMatch;
+        const idx = parseInt(index, 10);
+
+        if (!arrays[arrayName]) {
+          arrays[arrayName] = [];
+        }
+
+        if (nestedKey) {
+          if (!arrays[arrayName][idx]) {
+            arrays[arrayName][idx] = {};
+          }
+          (arrays[arrayName][idx] as Record<string, unknown>)[nestedKey] = value;
+        } else {
+          arrays[arrayName][idx] = value;
+        }
+      } else {
+        textData[key] = value;
+      }
+    }
+  });
+
+  Object.entries(arrays).forEach(([key, value]) => {
+    textData[key] = value;
+  });
+
+  return textData as T;
+};
