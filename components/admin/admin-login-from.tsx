@@ -30,6 +30,28 @@ export default function AdminLoginForm() {
 
   const onSubmit = async (data: AdminLoginFormData) => {
     console.log("Submitting admin login form with data:", data);
+
+    try {
+      const response = await fetch("/api/admin/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Admin login successful:", result);
+        // Redirect to admin dashboard or perform other actions
+      } else {
+        console.error("Admin login failed:", result);
+        setError(result.message || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Admin login error", error);
+    }
   };
 
   return (
