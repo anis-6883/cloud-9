@@ -6,10 +6,12 @@ interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  image: string;
+  image: {
+    publicId: string;
+    secureUrl: string;
+  };
   dialCode: string;
   phone: string;
-  role: string;
 }
 
 const UserSchema: Schema = new mongoose.Schema(
@@ -17,14 +19,16 @@ const UserSchema: Schema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true },
     password: { type: String, required: true },
-    image: { type: String, trim: true },
+    image: {
+      publicId: { type: String, trim: true },
+      secureUrl: { type: String, trim: true }
+    },
     dialCode: { type: String, trim: true },
-    phone: { type: String, trim: true },
-    role: { type: String, enum: ["admin", "user"], required: true },
+    phone: { type: String, trim: true }
   },
   {
     timestamps: true,
-    versionKey: false,
+    versionKey: false
   }
 );
 
@@ -40,12 +44,11 @@ const UserZodSchema = z.object({
   image: z
     .object({
       publicId: stringField(),
-      secureUrl: stringField(),
+      secureUrl: stringField()
     })
     .optional(),
   dialCode: stringField({ allowNumber: true }),
-  phone: stringField({ allowNumber: true }),
-  role: z.enum(["admin", "user"]),
+  phone: stringField({ allowNumber: true })
 });
 
 // Update Schema
