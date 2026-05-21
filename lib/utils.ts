@@ -161,3 +161,33 @@ export const extractFormData = <T extends Record<string, unknown> = Record<strin
 
   return textData as T;
 };
+
+export function slugify(input: string): string {
+  if (!input) return input;
+
+  return input
+    .normalize("NFKD") // split accented chars (é → e + ́)
+    .replace(/[\u0300-\u036f]/g, "") // remove diacritics
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove invalid chars
+    .replace(/[\s_-]+/g, "-") // collapse spaces/underscores to -
+    .replace(/^-+|-+$/g, ""); // trim leading/trailing -
+}
+
+export const makePaginate = <T>(docs: T[], page: number, limit: number, skip: number, total: number) => {
+  const hasNext = total > skip + Number(limit);
+  const hasPrev = Number(page) > 1;
+
+  return {
+    docs,
+    pagination: {
+      page: +page,
+      limit: +limit,
+      totalPage: Math.ceil(total / Number(limit)),
+      totalDocs: total,
+      hasNext,
+      hasPrev
+    }
+  };
+};
