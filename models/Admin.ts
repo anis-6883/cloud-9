@@ -6,7 +6,10 @@ interface IAdmin extends Document {
   name: string;
   email: string;
   password: string;
-  image: string;
+  image: {
+    publicId: string;
+    secureUrl: string;
+  };
   dialCode: string;
   phone: string;
 }
@@ -16,7 +19,10 @@ const AdminSchema: Schema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true },
     password: { type: String, required: true },
-    image: { type: String, trim: true },
+    image: {
+      publicId: { type: String, trim: true },
+      secureUrl: { type: String, trim: true }
+    },
     dialCode: { type: String, trim: true },
     phone: { type: String, trim: true }
   },
