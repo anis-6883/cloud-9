@@ -1,3 +1,4 @@
+import { handleAdminLogin } from "@/actions/admin/auth-actions";
 import routes from "@/config/routes";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -49,21 +50,27 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials: any) {
-        // Call your backend API here instead of parsing JSON
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/admin/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password
-          })
-        });
+        if (!credentials?.email || !credentials?.password) return null;
 
-        const data = await res.json();
+        try {
+          const formData = new FormData();
+          formData.append("email", credentials.email);
+          formData.append("password", credentials.password);
 
-        if (!res.ok || !data) return null; // Invalid credentials
+          const res = await handleAdminLogin(formData);
 
-        return data; // Must include { token, email, name } or whatever you need
+          if (res && !res.error && res.token) {
+            return {
+              data: {
+                token: res.token
+              }
+            } as any;
+          }
+          return null;
+        } catch (error) {
+          console.error("Error in Next-Auth authorize:", error);
+          return null;
+        }
       }
     })
   ]
