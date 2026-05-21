@@ -3,7 +3,7 @@ const routes = {
     home: "/",
     trackOrder: "/track-order",
     cart: "/cart",
-    adminLogin: "/root-lab/admin/login",
+    adminLogin: "/nextsolve-lab/admin/login",
     policy: "/policy",
     terms: "/terms",
     brands: "/brands",

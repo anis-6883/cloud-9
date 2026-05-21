@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Utensils } from "lucide-react";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -29,7 +30,27 @@ export default function AdminLoginForm() {
   });
 
   const onSubmit = async (data: AdminLoginFormData) => {
-    console.log("Submitting admin login form with data:", data);
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false
+      });
+
+      if (res?.error) {
+        setError("Invalid email or password!");
+      } else if (res?.ok) {
+        window.location.href = "/admin/dashboard";
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,11 +81,15 @@ export default function AdminLoginForm() {
               name='email'
               label='Email'
               type='email'
-              placeholder='e.g., john@gmail.com'
+              placeholder='admin@gmail.com'
               inputClassName='bg-transparent'
             />
 
-            <InputField name='password' label='Password' type='password' placeholder='********' inputClassName='bg-transparent' />
+            <InputField name='password' label='Password' type='password' placeholder='admin123' inputClassName='bg-transparent' />
+
+            <div className='text-xs text-slate-400 font-medium text-center -mt-1 pb-1'>
+              Demo Access: <span className='text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.5 rounded'>admin@gmail.com</span> / <span className='text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.5 rounded'>admin123</span>
+            </div>
 
             {error && <div className='text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-2'>{error}</div>}
 

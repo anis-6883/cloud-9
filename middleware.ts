@@ -1,7 +1,24 @@
 import routes from "@/config/routes";
-import { extractRoutes } from "@/lib/utils";
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
+
+type NestedRoutes = string | { [key: string]: NestedRoutes | ((...args: any[]) => string) };
+
+function extractRoutes(obj: NestedRoutes): string[] {
+  const links: string[] = [];
+
+  for (const value of Object.values(obj as Record<string, NestedRoutes>)) {
+    if (typeof value === "string") {
+      links.push(value);
+    } else if (typeof value === "function") {
+      continue;
+    } else if (typeof value === "object" && value !== null) {
+      links.push(...extractRoutes(value));
+    }
+  }
+
+  return links;
+}
 
 function isAdminRoute(pathname: string): boolean {
   const adminRoutes = extractRoutes(routes.privateRoutes.admin);
