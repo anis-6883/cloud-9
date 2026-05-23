@@ -1,3 +1,4 @@
+import { getCloudinaryFolderName } from "@/config/cloudinary";
 import { clsx, type ClassValue } from "clsx";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
@@ -7,6 +8,13 @@ import { StringFieldOptions } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export async function extractPublicId(url: string) {
+  const mainFolderName = await getCloudinaryFolderName();
+
+  const publicId = url.match(new RegExp(`${mainFolderName}/[^?]+`))?.[0]?.replace(/\.[^/.]+$/, "");
+  return publicId;
 }
 
 export const isRouteActive = (pathname: string, url: string) => {
@@ -89,6 +97,13 @@ export const stringField = (data: StringFieldOptions = {}) => {
           message: "Provide a valid URL!"
         });
       }
+
+      if (data?.enum && !data.enum.includes(val)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `Value must be one of [${data.enum.join(" | ")}]!`
+        });
+      }
     });
 
   if (!data?.required) {
@@ -115,4 +130,76 @@ export function extractRoutes(obj: NestedRoutes): string[] {
   }
 
   return links;
+}
+
+export const extractFormData = <T extends Record<string, unknown> = Record<string, unknown>>(formData: FormData): T => {
+  const textData: Record<string, unknown> = {};
+  const arrays: Record<string, unknown[]> = {};
+
+  formData.forEach((value, key) => {
+    if (!(value instanceof File)) {
+      const arrayMatch = key.match(/^(.+)\[(\d+)\]\.?(.*)$/);
+
+      if (arrayMatch) {
+        const [, arrayName, index, nestedKey] = arrayMatch;
+        const idx = parseInt(index, 10);
+
+        if (!arrays[arrayName]) {
+          arrays[arrayName] = [];
+        }
+
+        if (nestedKey) {
+          if (!arrays[arrayName][idx]) {
+            arrays[arrayName][idx] = {};
+          }
+          (arrays[arrayName][idx] as Record<string, unknown>)[nestedKey] = value;
+        } else {
+          arrays[arrayName][idx] = value;
+        }
+      } else {
+        textData[key] = value;
+      }
+    }
+  });
+
+  Object.entries(arrays).forEach(([key, value]) => {
+    textData[key] = value;
+  });
+
+  return textData as T;
+};
+
+export function slugify(input: string): string {
+  if (!input) return input;
+
+  return input
+    .normalize("NFKD") // split accented chars (é → e + ́)
+    .replace(/[\u0300-\u036f]/g, "") // remove diacritics
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove invalid chars
+    .replace(/[\s_-]+/g, "-") // collapse spaces/underscores to -
+    .replace(/^-+|-+$/g, ""); // trim leading/trailing -
+}
+
+export const makePaginate = <T>(docs: T[], page: number, limit: number, skip: number, total: number) => {
+  const hasNext = total > skip + Number(limit);
+  const hasPrev = Number(page) > 1;
+
+  return {
+    docs,
+    pagination: {
+      page: +page,
+      limit: +limit,
+      totalPage: Math.ceil(total / Number(limit)),
+      totalDocs: total,
+      hasNext,
+      hasPrev
+    }
+  };
+};
+
+export function generateOtp(): string {
+  const { randomInt } = require("crypto");
+  return String(randomInt(100000, 999999));
 }

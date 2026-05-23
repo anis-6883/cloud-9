@@ -27,12 +27,14 @@ async function dbConnect(): Promise<typeof mongoose> {
         bufferCommands: false,
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000,
+        socketTimeoutMS: 45000
       })
-      .catch((err) => {
+      .catch(err => {
         cached.promise = null;
         throw err;
       });
+
+    console.log("🚀 MongoDB connected successfully!");
   }
 
   cached.conn = await cached.promise;

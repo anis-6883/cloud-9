@@ -1,7 +1,6 @@
 import { asyncHandler } from "@/lib/async-handler";
 import { apiResponse } from "@/lib/utils";
-import { adminPasswordChangeSchema } from "@/lib/validation-schema";
-import { Admin } from "@/models/Admin";
+import { Admin, adminPasswordChangeSchema } from "@/models/Admin";
 import bcrypt from "bcrypt";
 import { NextRequest } from "next/server";
 import z from "zod";
