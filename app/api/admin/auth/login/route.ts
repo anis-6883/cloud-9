@@ -1,8 +1,7 @@
 import { ROLE } from "@/config/constants";
 import { asyncHandler } from "@/lib/async-handler";
 import { apiResponse, generateSignature } from "@/lib/utils";
-import { adminLoginSchema } from "@/lib/validation-schema";
-import { Admin } from "@/models/Admin";
+import { Admin, adminLoginSchema } from "@/models/Admin";
 import bcrypt from "bcrypt";
 import z from "zod";
 

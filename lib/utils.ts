@@ -97,6 +97,13 @@ export const stringField = (data: StringFieldOptions = {}) => {
           message: "Provide a valid URL!"
         });
       }
+
+      if (data?.enum && !data.enum.includes(val)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `Value must be one of [${data.enum.join(" | ")}]!`
+        });
+      }
     });
 
   if (!data?.required) {
@@ -191,3 +198,8 @@ export const makePaginate = <T>(docs: T[], page: number, limit: number, skip: nu
     }
   };
 };
+
+export function generateOtp(): string {
+  const { randomInt } = require("crypto");
+  return String(randomInt(100000, 999999));
+}
