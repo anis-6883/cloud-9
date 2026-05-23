@@ -24,7 +24,7 @@ export const PUT = asyncHandler(
     const existingCategory = await Category.findById(id);
     if (!existingCategory) return apiResponse(false, 404, "Category not found!");
 
-    if (existingCategory.slug === slugify(data?.slug as string)) return apiResponse(false, 400, "Slug already exists!");
+    if (existingCategory.slug === slugify(data?.slug as string)) return apiResponse(false, 409, "Slug already exists!");
 
     await Category.findByIdAndUpdate(id, { ...data }, { new: true });
 

@@ -5,4 +5,5 @@ export interface StringFieldOptions {
   isEmail?: boolean;
   allowNumber?: boolean;
   isUrl?: boolean;
+  enum?: string[];
 }
