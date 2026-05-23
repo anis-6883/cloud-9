@@ -2,7 +2,7 @@ import { deleteFromCloudinary } from "@/config/cloudinary";
 import { asyncHandler } from "@/lib/async-handler";
 import { apiResponse } from "@/lib/utils";
 import { Admin, AdminUpdateZodSchema } from "@/models/Admin";
-import TempFile from "@/models/TempFile";
+import { TempFile } from "@/models/TempFile";
 import { NextRequest } from "next/server";
 import z from "zod";
 
