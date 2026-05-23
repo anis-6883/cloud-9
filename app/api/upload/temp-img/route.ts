@@ -1,7 +1,7 @@
 import { deleteMultipleFromCloudinary } from "@/config/cloudinary";
 import { asyncHandler } from "@/lib/async-handler";
 import { apiResponse } from "@/lib/utils";
-import TempFile from "@/models/TempFile";
+import { TempFile } from "@/models/TempFile";
 
 // Get total temp images
 export const GET = asyncHandler(async () => {
