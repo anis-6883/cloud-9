@@ -3,8 +3,7 @@ import { asyncFormDataHandler } from "@/lib/async-formdata-handler";
 import { asyncHandler } from "@/lib/async-handler";
 import { fileValidator } from "@/lib/file-validator";
 import { apiResponse, extractPublicId } from "@/lib/utils";
-import { imgDeleteSchema, uploadFileSchema } from "@/lib/validation-schema";
-import TempFile from "@/models/TempFile";
+import { imgDeleteSchema, TempFile, uploadFileSchema } from "@/models/TempFile";
 import { NextRequest } from "next/server";
 import z from "zod";
 
