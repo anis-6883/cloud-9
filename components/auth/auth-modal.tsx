@@ -50,7 +50,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         const loginData = data as LoginFormData;
 
         const res = await signIn("credentials", {
-          redirect: false, // important (modal এর জন্য)
+          redirect: false,
           email: loginData.email,
           password: loginData.password
         });
