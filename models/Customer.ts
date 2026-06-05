@@ -17,6 +17,7 @@ interface ICustomer extends Document {
   phone?: string;
   dob?: Date;
   status?: boolean;
+  softDeleted?: boolean;
 }
 
 // Customer Model
@@ -34,7 +35,8 @@ const CustomerSchema: Schema = new mongoose.Schema(
     dialCode: { type: String, trim: true },
     phone: { type: String, trim: true },
     dob: { type: Date },
-    status: { type: Boolean, default: true }
+    status: { type: Boolean, default: true },
+    softDeleted: { type: Boolean, default: false }
   },
   {
     timestamps: true,
