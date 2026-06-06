@@ -17,6 +17,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
       url: "/admin/dashboard",
       icon: LayoutDashboard
     },
+
     {
       title: "Food Management",
       icon: Utensils,

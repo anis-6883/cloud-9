@@ -3,6 +3,9 @@ import { ORDER_STATUS } from "./constant";
 const apiRoutes = {
   publicRoutes: {
     adminSignIn: "/api/admin/auth/login",
+    customerSignIn: "/api/customer/login",
+    customerRegister: "/api/customer/register",
+    customerOtpVerify: "/api/customer/otp-verify",
     uploadImage: "/api/upload/single-img",
     deleteImageByURL: "/api/upload/single-img",
     getTempImagesCount: "/api/upload/temp-img",
@@ -18,7 +21,7 @@ const apiRoutes = {
     customerSendSignupOtp: "/api/v1/customers/auth/send-signup-otp",
     customerVerifyOtp: "/api/v1/customers/auth/verify-otp",
     customerSignupVerifyOtp: "/api/v1/customers/auth/verify-signup-otp",
-    flashSaleProducts: "/api/v1/customers/offers/flash-sale",
+    flashSaleProducts: "/api/v1/customers/offers/flash-sale"
   },
   privateRoutes: {
     admin: {
@@ -33,12 +36,12 @@ const apiRoutes = {
         getById: (id: string) => `/api/admin/manage/team-member/${id}`,
         update: (id: string) => `/api/admin/manage/team-member/${id}`,
         delete: (id: string) => `/api/admin/manage/team-member/${id}`,
-        sort: `/api/admin/manage/team-member/sort`,
+        sort: `/api/admin/manage/team-member/sort`
       },
       customer: {
         getCustomers: "/api/v1/admin/customers",
         getSingleCustomer: (id: string) => `/api/v1/admin/customers/${id}`,
-        getSingleCustomerOrders: (id: string) => `/api/v1/admin/customers/${id}/orders`,
+        getSingleCustomerOrders: (id: string) => `/api/v1/admin/customers/${id}/orders`
       },
 
       offersManagement: {
@@ -49,15 +52,15 @@ const apiRoutes = {
           update: (id: string) => `/api/v1/admin/offers/${id}`,
           delete: (id: string) => `/api/v1/admin/offers/${id}`,
           sort: `/api/v1/admin/offers/sort`,
-          createProduct: (id: string) => `/api/v1/admin/offers/${id}/product`,
+          createProduct: (id: string) => `/api/v1/admin/offers/${id}/product`
         },
         banner: {
           get: `/api/v1/admin/banners`,
           getById: (id: string) => `/api/v1/admin/banners/${id}`,
           create: `/api/v1/admin/banners`,
           update: (id: string) => `/api/v1/admin/banners/${id}`,
-          delete: (id: string) => `/api/v1/admin/banners/${id}`,
-        },
+          delete: (id: string) => `/api/v1/admin/banners/${id}`
+        }
       },
       orderManagement: {
         updateOrderById: (id: string) => `/api/v1/admin/orders/${id}`,
@@ -68,24 +71,24 @@ const apiRoutes = {
         refundAllById: (id: string) => `/api/v1/admin/refunds/${id}/refund-all`,
         refundPartially: (id: string) => `/api/v1/admin/refunds/${id}/refund`,
         rejectRefundPartially: (id: string) => `/api/v1/admin/refunds/${id}/reject`,
-        rejectRefundAllById: (id: string) => `/api/v1/admin/refunds/${id}/reject-all`,
+        rejectRefundAllById: (id: string) => `/api/v1/admin/refunds/${id}/reject-all`
       },
       activityLog: {
         getActivityLog: (resourceType: string, resourceId?: string) =>
-          `/api/v1/admin/activities?resourceType=${resourceType}${resourceId ? `&resourceId=${resourceId}` : ""}`,
+          `/api/v1/admin/activities?resourceType=${resourceType}${resourceId ? `&resourceId=${resourceId}` : ""}`
       },
       userRole: {
         get: `/api/v1/admin/roles`,
         getById: (id: string) => `/api/v1/admin/roles/${id}`,
         create: `/api/v1/admin/roles`,
         update: (id: string) => `/api/v1/admin/roles/${id}`,
-        delete: (id: string) => `/api/v1/admin/roles/${id}`,
+        delete: (id: string) => `/api/v1/admin/roles/${id}`
       },
       settings: {
         get: `/api/v1/admin/settings`,
         updatePolicy: (id: string) => `/api/v1/admin/settings/policy/${id}`,
-        addPolicy: `/api/v1/admin/settings/policy`,
-      },
+        addPolicy: `/api/v1/admin/settings/policy`
+      }
     },
     customer: {
       profile: "/api/v1/customers/auth/me",
@@ -105,15 +108,15 @@ const apiRoutes = {
         getOrder: (orderId: string) => `/api/v1/customers/orders/${orderId}`,
         cancelOrder: (id: string) => `/api/v1/customers/orders/${id}/cancel`,
         requestRefund: (id: string) => `/api/v1/customers/orders/${id}/refund`,
-        getRefunds: (query: string) => `/api/v1/customers/refunds?${query}`,
-      },
+        getRefunds: (query: string) => `/api/v1/customers/refunds?${query}`
+      }
     },
     dropdownList: {
       store: `/api/v1/admin/sellers/dropdown`,
       products: `/api/v1/admin/products/dropdown`,
-      comboOffers: `/api/v1/admin/combo-products/dropdown`,
-    },
-  },
+      comboOffers: `/api/v1/admin/combo-products/dropdown`
+    }
+  }
 };
 
 export default apiRoutes;

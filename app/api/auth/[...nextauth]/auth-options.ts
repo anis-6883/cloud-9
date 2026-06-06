@@ -1,4 +1,5 @@
 import { handleAdminLogin } from "@/actions/admin/auth-actions";
+import { handleCustomerLogin } from "@/actions/customer/auth-actions";
 import routes from "@/config/routes";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -69,6 +70,37 @@ export const authOptions: NextAuthOptions = {
           return null;
         } catch (error) {
           console.error("Error in Next-Auth authorize:", error);
+          return null;
+        }
+      }
+    }),
+    CredentialsProvider({
+      id: "customer-credentials",
+      name: "Customer Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials: any) {
+        if (!credentials?.email || !credentials?.password) return null;
+
+        try {
+          const formData = new FormData();
+          formData.append("email", credentials.email);
+          formData.append("password", credentials.password);
+
+          const res = await handleCustomerLogin(formData);
+
+          if (res && !res.error && res.token) {
+            return {
+              data: {
+                token: res.token
+              }
+            } as any;
+          }
+          return null;
+        } catch (error) {
+          console.error("Error in Customer Next-Auth authorize:", error);
           return null;
         }
       }
