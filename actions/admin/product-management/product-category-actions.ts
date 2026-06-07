@@ -25,7 +25,7 @@ export async function getProductCategories(isActive: boolean = false) {
 
 export async function getProductCategoryById(id: string) {
   try {
-    const res = await apiClient(apiRoutes.privateRoutes.admin.productManagement.productCategory.getById(id), {
+    const res = await apiClient(`/api/admin/category/${id}`, {
       method: "GET",
       cache: "no-store"
     });

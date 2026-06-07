@@ -35,7 +35,7 @@ export type TDropzoneMultiple = {
 export type ProductCategory = {
   _id: string;
   name: string;
-  image: string;
+  image?: string | { publicId: string; secureUrl: string };
   status?: boolean;
   slug: string;
   subCategories?: ProductCategory[];

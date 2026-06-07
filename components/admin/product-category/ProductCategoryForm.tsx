@@ -8,7 +8,6 @@ import Toast from "@/components/shared/Toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import routes from "@/config/routes";
 import { ProductCategory } from "@/lib/types";
 import { generateSlug } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,13 +41,17 @@ export default function ProductCategoryForm({ category }: ProductCategoryFormCli
   const isEditMode = !!category?._id;
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+
+  const existingImageUrl = typeof category?.image === "object" ? category?.image?.secureUrl : category?.image;
+  const existingImagePublicId = typeof category?.image === "object" ? category?.image?.publicId : "";
+
   const [uploadImageCredentials, setUploadImageCredentials] = useState<{
     publicId: string;
     secureUrl: string;
     uploaded?: boolean;
   }>({
-    publicId: "",
-    secureUrl: "",
+    publicId: existingImagePublicId || "",
+    secureUrl: existingImageUrl || "",
     uploaded: false
   });
 
@@ -57,7 +60,7 @@ export default function ProductCategoryForm({ category }: ProductCategoryFormCli
     defaultValues: {
       name: category?.name || "",
       status: category?.status ?? true,
-      image: category?.image || ""
+      image: existingImageUrl || ""
     }
   });
 
@@ -96,7 +99,7 @@ export default function ProductCategoryForm({ category }: ProductCategoryFormCli
         if (!res?.status) throw new Error(res?.message || "Failed to update category!");
         Toast.remove(t);
         Toast.success("Category updated successfully!");
-        push(routes.privateRoutes.admin.productManagement.productCategory.home);
+        push("/admin/foods/categories");
       } else {
         const res = (await createProductCategory(payload)) as any;
         if (!res?.status) throw new Error(res?.message || "Failed to create category!");
@@ -125,7 +128,7 @@ export default function ProductCategoryForm({ category }: ProductCategoryFormCli
             <SingleImageUpload
               setIsUploading={setIsUploading}
               fallbackText={initials}
-              existingImage={category?.image}
+              existingImage={existingImageUrl}
               name='image'
               label='Logo'
               avatarSize='h-42 w-42'

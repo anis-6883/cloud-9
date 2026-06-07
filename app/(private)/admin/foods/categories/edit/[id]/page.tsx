@@ -1,10 +1,13 @@
+import { getProductCategoryById } from "@/actions/admin/product-management/product-category-actions";
 import ProductCategoryForm from "@/components/admin/product-category/ProductCategoryForm";
-import BreadcrumbWrapper from "@/components/shared/BreadcrumbWrapper";
 
-export default function EditCategoryPage({ params }: { params: { id: string } }) {
+export default async function EditCategoryPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const response = await getProductCategoryById(id);
+
   return (
-    <BreadcrumbWrapper title='Edit Categroy' description='Edit category'>
-      <ProductCategoryForm />
-    </BreadcrumbWrapper>
+    <div className='p-4'>
+      <ProductCategoryForm category={response?.data} />
+    </div>
   );
 }
