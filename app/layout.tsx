@@ -43,13 +43,10 @@ export default function RootLayout({
     <html lang='en' className={geist.className} suppressHydrationWarning>
       <body className='font-sans antialiased bg-background text-foreground' suppressHydrationWarning>
         <NextTopLoader color='#cf3c3e' showSpinner={false} />
-        <Toaster position='top-right' />
+        <Toaster position='top-center' />
         <SearchProvider>
           <CartProvider>
             <AuthProvider>{children}</AuthProvider>
-            {/* <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-            
-            </ThemeProvider> */}
           </CartProvider>
         </SearchProvider>
       </body>

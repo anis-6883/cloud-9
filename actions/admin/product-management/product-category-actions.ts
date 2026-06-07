@@ -91,7 +91,7 @@ export async function deleteProductCategory(id: string | undefined) {
   try {
     if (!id) throw new Error("Invalid category ID!");
 
-    const res = await apiClient(apiRoutes.privateRoutes.admin.productManagement.productCategory.delete(id), {
+    const res = await apiClient(`/api/admin/category/${id}`, {
       method: "DELETE"
     });
     return res;
