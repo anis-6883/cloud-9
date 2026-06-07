@@ -22,8 +22,8 @@ const routes = {
       dashboard: "/admin/dashboard",
       productManagement: {
         productCategory: {
-          home: "/admin/product-management/product-category",
-          create: "/admin/product-management/product-category/create",
+          home: "admin/foods/categories",
+          create: "/admin/foods/categories/create",
           edit: (id: string) => `/admin/product-management/product-category/edit/${id}`
         },
         brand: {

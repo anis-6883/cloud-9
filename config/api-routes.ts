@@ -88,6 +88,16 @@ const apiRoutes = {
         get: `/api/v1/admin/settings`,
         updatePolicy: (id: string) => `/api/v1/admin/settings/policy/${id}`,
         addPolicy: `/api/v1/admin/settings/policy`
+      },
+      productManagement: {
+        productCategory: {
+          get: `/admin/category`,
+          getById: (id: string) => `/admin/category/${id}`,
+          create: `/admin/category`,
+          update: (id: string) => `/admin/category/${id}`,
+          delete: (id: string) => `/admin/category/${id}`,
+          sort: `/admin/category/sort`
+        }
       }
     },
     customer: {

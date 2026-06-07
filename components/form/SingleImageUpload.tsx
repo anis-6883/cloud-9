@@ -226,15 +226,23 @@ export default function SingleImageUpload({
       reader.onloadend = () => setPreview(reader.result as string);
       reader.readAsDataURL(file);
       onChange(file);
+      // Set form value immediately so validation passes even if upload is pending
+      form.setValue(name, file);
+      form.clearErrors(name);
       setIsUploading?.(true);
 
       const uploadRes = await uploadImage(file, folderName);
-      setUploadImageCredentials({
-        fileKey: uploadRes?.data?.fileKey,
-        publicUrl: uploadRes?.data?.publicUrl,
-        uploaded: true
-      });
-      form.setValue(name, uploadRes?.data?.publicUrl);
+      if (uploadRes?.data?.publicUrl) {
+        setUploadImageCredentials({
+          fileKey: uploadRes?.data?.fileKey,
+          publicUrl: uploadRes?.data?.publicUrl,
+          uploaded: true
+        });
+        form.setValue(name, uploadRes?.data?.publicUrl);
+      } else {
+        // upload failed or skipped — keep the File object in the form
+        form.setValue(name, file);
+      }
       form.clearErrors(name);
       setIsUploading?.(false);
     } else {

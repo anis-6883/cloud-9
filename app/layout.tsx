@@ -1,7 +1,6 @@
 import { CartProvider } from "@/context/cart-context";
 import { SearchProvider } from "@/context/search-context";
 import AuthProvider from "@/provider/AuthProvider";
-import { ThemeProvider } from "@/provider/ThemeProvider";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
@@ -45,9 +44,10 @@ export default function RootLayout({
         <NextTopLoader color='#cf3c3e' showSpinner={false} />
         <SearchProvider>
           <CartProvider>
-            <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-              <AuthProvider>{children}</AuthProvider>
-            </ThemeProvider>
+            <AuthProvider>{children}</AuthProvider>
+            {/* <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+            
+            </ThemeProvider> */}
           </CartProvider>
         </SearchProvider>
       </body>
