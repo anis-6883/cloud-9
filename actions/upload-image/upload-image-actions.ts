@@ -6,8 +6,8 @@ import apiClient from "@/lib/api-client";
 export async function uploadImage(file: File, folder: string) {
   try {
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("folder", folder);
+    formData.append("image", file);
+    formData.append("folderName", folder);
 
     const res = await apiClient(apiRoutes.publicRoutes.uploadImage, {
       method: "POST",

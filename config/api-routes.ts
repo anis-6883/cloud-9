@@ -91,12 +91,12 @@ const apiRoutes = {
       },
       productManagement: {
         productCategory: {
-          get: `/admin/category`,
-          getById: (id: string) => `/admin/category/${id}`,
-          create: `/admin/category`,
-          update: (id: string) => `/admin/category/${id}`,
-          delete: (id: string) => `/admin/category/${id}`,
-          sort: `/admin/category/sort`
+          get: `/api/admin/category`,
+          getById: (id: string) => `/api/admin/category/${id}`,
+          create: `/api/admin/category`,
+          update: (id: string) => `/api/admin/category/${id}`,
+          delete: (id: string) => `/api/admin/category/${id}`,
+          sort: `/api/admin/category/sort`
         }
       }
     },

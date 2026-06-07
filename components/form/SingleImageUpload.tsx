@@ -43,8 +43,8 @@ interface IProps {
   fallbackText?: string;
   avatarSize?: string;
   folderName?: string;
-  uploadImageCredentials?: { fileKey: string; publicUrl: string; uploaded?: boolean };
-  setUploadImageCredentials: (data: { fileKey: string; publicUrl: string; uploaded?: boolean }) => void;
+  uploadImageCredentials?: { publicId: string; secureUrl: string; uploaded?: boolean };
+  setUploadImageCredentials: (data: { publicId: string; secureUrl: string; uploaded?: boolean }) => void;
   variant?: "avatar" | "placeholder" | "dropzone";
   placeholder?: string;
   setIsUploading?: (value: boolean) => void;
@@ -232,13 +232,13 @@ export default function SingleImageUpload({
       setIsUploading?.(true);
 
       const uploadRes = await uploadImage(file, folderName);
-      if (uploadRes?.data?.publicUrl) {
+      if (uploadRes?.publicId) {
         setUploadImageCredentials({
-          fileKey: uploadRes?.data?.fileKey,
-          publicUrl: uploadRes?.data?.publicUrl,
+          publicId: uploadRes?.publicId,
+          secureUrl: uploadRes?.secureUrl,
           uploaded: true
         });
-        form.setValue(name, uploadRes?.data?.publicUrl);
+        form.setValue(name, uploadRes?.secureUrl);
       } else {
         // upload failed or skipped — keep the File object in the form
         form.setValue(name, file);
@@ -369,7 +369,7 @@ export default function SingleImageUpload({
                     onClick={e => {
                       e.stopPropagation();
                       handleRemove(field.onChange);
-                      setUploadImageCredentials({ fileKey: "", publicUrl: "", uploaded: false });
+                      setUploadImageCredentials({ publicId: "", secureUrl: "", uploaded: false });
                       form.setValue(name, "");
                       if (existingImage && !uploadImageCredentials?.uploaded) {
                         setImageMarkedForDeletion(existingImage);
@@ -417,7 +417,7 @@ export default function SingleImageUpload({
                     onClick={e => {
                       e.stopPropagation();
                       handleRemove(field.onChange);
-                      setUploadImageCredentials({ fileKey: "", publicUrl: "", uploaded: false });
+                      setUploadImageCredentials({ publicId: "", secureUrl: "", uploaded: false });
                       form.setValue(name, "");
                       if (existingImage && !uploadImageCredentials?.uploaded) {
                         setImageMarkedForDeletion(existingImage);
@@ -470,7 +470,7 @@ export default function SingleImageUpload({
                           setImageMarkedForDeletion(existingImage);
                         }
                         handleRemove(field.onChange);
-                        setUploadImageCredentials({ fileKey: "", publicUrl: "", uploaded: false });
+                        setUploadImageCredentials({ publicId: "", secureUrl: "", uploaded: false });
                         form.setValue(name, "");
                       }}
                     >

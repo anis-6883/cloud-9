@@ -4,6 +4,7 @@ import AuthProvider from "@/provider/AuthProvider";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const geist = Geist({
@@ -42,6 +43,7 @@ export default function RootLayout({
     <html lang='en' className={geist.className} suppressHydrationWarning>
       <body className='font-sans antialiased bg-background text-foreground' suppressHydrationWarning>
         <NextTopLoader color='#cf3c3e' showSpinner={false} />
+        <Toaster position='top-right' />
         <SearchProvider>
           <CartProvider>
             <AuthProvider>{children}</AuthProvider>

