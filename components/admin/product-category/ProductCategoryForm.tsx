@@ -141,7 +141,7 @@ export default function ProductCategoryForm({ category }: ProductCategoryFormCli
         </Card>
 
         <div className='flex justify-between gap-4 md:justify-end'>
-          <Link href={routes.privateRoutes.admin.productManagement.productCategory.home}>
+          <Link href='/admin/foods/categories'>
             <Button type='button' variant='outline' disabled={isLoading || isUploading} className='max-md:px-2'>
               Cancel
             </Button>

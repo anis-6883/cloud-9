@@ -1,11 +1,15 @@
-// import ProductCategoryForm from "@/components/admin/product-category/ProductCategoryForm";
+import { getProductCategories } from "@/actions/admin/product-management/product-category-actions";
 import ProductCategoryTable from "@/components/admin/product-category/ProductCategorytable";
 import BreadcrumbWrapper from "@/components/shared/BreadcrumbWrapper";
 import { Button } from "@/components/ui/button";
 import routes from "@/config/routes";
 import { Grid3x3, Plus } from "lucide-react";
 import Link from "next/link";
-export default function CategoriesPage() {
+
+export default async function CategoriesPage() {
+  const res = await getProductCategories();
+  const data = res?.data || [];
+
   return (
     <BreadcrumbWrapper
       title='Manage Category'
@@ -20,7 +24,7 @@ export default function CategoriesPage() {
         </Link>
       }
     >
-      <ProductCategoryTable />
+      <ProductCategoryTable data={data} total={data.length} />
     </BreadcrumbWrapper>
   );
 }
