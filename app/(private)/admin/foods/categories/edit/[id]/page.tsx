@@ -3,7 +3,7 @@ import BreadcrumbWrapper from "@/components/shared/BreadcrumbWrapper";
 
 export default function EditCategoryPage({ params }: { params: { id: string } }) {
   return (
-    <BreadcrumbWrapper title='Edit Team Member' description='Edit team member '>
+    <BreadcrumbWrapper title='Edit Categroy' description='Edit category'>
       <ProductCategoryForm />
     </BreadcrumbWrapper>
   );
