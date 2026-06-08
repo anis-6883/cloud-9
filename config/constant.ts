@@ -87,17 +87,24 @@ export enum ORDER_ACTIVITY_LOG_TYPE {
   ORDER = "ORDER",
   PRODUCT = "PRODUCT"
 }
+
 export enum ORDER_STATUS {
-  PENDING = "PENDING",
-  CONFIRMED = "CONFIRMED",
-  PROCESSING = "PROCESSING",
-  SHIPPED = "SHIPPED",
-  OUT_FOR_DELIVERY = "OUT_FOR_DELIVERY",
-  DELIVERED = "DELIVERED",
-  CANCELLED = "CANCELLED",
-  RETURNED = "RETURNED",
-  REFUNDED = "REFUNDED",
-  FAILED = "FAILED"
+  PENDING = "pending",
+  CONFIRMED = "confirmed",
+  COOKING = "cooking", // "processing"
+  SHIPPED = "shipped",
+  OUT_FOR_DELIVERY = "out_for_delivery",
+  DELIVERED = "delivered",
+  CANCELLED = "cancelled",
+  RETURNED = "returned",
+  REFUNDED = "refunded",
+  FAILED = "failed"
+}
+
+export enum CANCELLED_BY {
+  CUSTOMER = "customer",
+  RESTAURANT = "restaurant",
+  SYSTEM = "system"
 }
 
 export enum REFUND_STATUS {
@@ -141,9 +148,19 @@ export enum ShopType {
   DEFAULT = "default"
 }
 
-export enum DisputeStatus {
-  PROCESSING = "processing",
-  RESOLVED = "resolved"
+export enum DISPUTE_STATUS {
+  OPENED = "opened", // customer raised a dispute
+  UNDER_REVIEW = "under_review", // support team investigating
+  RESOLVED = "resolved", // resolved in customer's favor → triggers REFUNDED
+  REJECTED = "rejected" // dispute denied
+}
+
+export enum DISPUTE_REASON {
+  NOT_DELIVERED = "not_delivered",
+  WRONG_ITEMS = "wrong_items",
+  DAMAGED_ITEMS = "damaged_items",
+  BILLING_ISSUE = "billing_issue",
+  QUALITY_ISSUE = "quality_issue"
 }
 
 export enum BusinessType {
