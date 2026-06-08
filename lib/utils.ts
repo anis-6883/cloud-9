@@ -203,3 +203,20 @@ export function generateOtp(): string {
   const { randomInt } = require("crypto");
   return String(randomInt(100000, 999999));
 }
+
+export const generateSlug = (text: string): string => {
+  const slug = text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+
+  const suffix = Array.from({ length: 15 }, () => Math.random().toString(36)[2])
+    .join("")
+    .toUpperCase();
+
+  return `${slug}-${suffix}`;
+};

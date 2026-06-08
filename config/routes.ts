@@ -20,11 +20,12 @@ const routes = {
         view: (id: string) => `/admin/order-management/order/${id}`
       },
       dashboard: "/admin/dashboard",
+
       productManagement: {
         productCategory: {
-          home: "/admin/product-management/product-category",
-          create: "/admin/product-management/product-category/create",
-          edit: (id: string) => `/admin/product-management/product-category/edit/${id}`
+          home: "/admin/foods/categories",
+          create: "/admin/foods/categories/create",
+          edit: (id: string) => `/admin/foods/categories/edit/${id}`
         },
         brand: {
           home: "/admin/product-management/brand",

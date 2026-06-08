@@ -1,10 +1,10 @@
 import { CartProvider } from "@/context/cart-context";
 import { SearchProvider } from "@/context/search-context";
 import AuthProvider from "@/provider/AuthProvider";
-import { ThemeProvider } from "@/provider/ThemeProvider";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const geist = Geist({
@@ -43,11 +43,10 @@ export default function RootLayout({
     <html lang='en' className={geist.className} suppressHydrationWarning>
       <body className='font-sans antialiased bg-background text-foreground' suppressHydrationWarning>
         <NextTopLoader color='#cf3c3e' showSpinner={false} />
+        <Toaster position='top-center' />
         <SearchProvider>
           <CartProvider>
-            <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-              <AuthProvider>{children}</AuthProvider>
-            </ThemeProvider>
+            <AuthProvider>{children}</AuthProvider>
           </CartProvider>
         </SearchProvider>
       </body>
