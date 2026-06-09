@@ -10,11 +10,14 @@ interface IOrder extends Document {
     {
       product: Types.ObjectId;
       name: string;
+      image: {
+        publicId: string;
+        secureUrl: string;
+      };
       quantity: number;
-      price: number;
+      finalPrice: number;
       hasDiscount: boolean;
       discountPctAmount: number;
-      discountPrice: number;
     }
   ];
   totalAmount: number;
@@ -27,22 +30,25 @@ interface IOrder extends Document {
 // Order Model
 const OrderSchema: Schema = new mongoose.Schema(
   {
-    customer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    customer: { type: Types.ObjectId, ref: "Customer", required: true },
     items: [
       {
-        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+        product: { type: Types.ObjectId, ref: "Product", required: true },
+        name: { type: String, required: true },
+        image: {
+          publicId: { type: String, trim: true, required: true },
+          secureUrl: { type: String, trim: true, required: true }
+        },
         quantity: { type: Number, required: true },
-        price: { type: Number, required: true },
+        finalPrice: { type: Number, required: true },
         hasDiscount: { type: Boolean, default: false },
-        discountPctAmount: { type: Number, default: 0 },
-        discountPrice: { type: Number, default: 0 }
+        discountPctAmount: { type: Number, default: 0 }
       }
     ],
     totalAmount: { type: Number, required: true },
     status: { type: String, enum: Object.values(ORDER_STATUS), default: ORDER_STATUS.PENDING },
     cancelledBy: { type: String, enum: Object.values(CANCELLED_BY) },
-    cancellationReason: { type: String, trim: true },
-    refundStatus: { type: String, enum: Object.values(REFUND_STATUS) }
+    cancellationReason: { type: String, trim: true }
   },
   {
     timestamps: true,
@@ -50,14 +56,25 @@ const OrderSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Order = mongoose.models.Order || mongoose.model<IOrder>("Order", OrderSchema, "Orders");
+const Order = mongoose.models.Order || mongoose.model<IOrder>("Order", OrderSchema, "orders");
 
-// Order Verify Validation Schema
-const OrderVerifySchema = z.object({
-  email: stringField({ required: true, isEmail: true }),
-  Order: stringField({ required: true, allowNumber: true, minLength: 6, maxLength: 6 })
+// Checkout Schema
+const CheckoutSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        productId: stringField({ required: true, minLength: 24 }),
+        quantity: z
+          .number("quantity must be a number!")
+          .int("quantity must be an integer!")
+          .min(1, "quantity must be at least 1")
+          .max(10, "quantity must be at most 10")
+      })
+    )
+    .min(1, "items must contain at least one product")
+    .nonempty()
 });
 
 // Export
-export { Order, OrderVerifySchema };
+export { CheckoutSchema, Order };
 export type { IOrder };

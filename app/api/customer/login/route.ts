@@ -24,10 +24,7 @@ export const POST = asyncHandler(CustomerLoginSchema, async (_, data: z.infer<ty
     const customer = await Customer.findOne({ email: payload.email, provider: "google" });
     if (!customer) return apiResponse(false, 404, "Customer not found with this Google account!");
 
-    const token = generateSignature(
-      { _id: customer._id, email: customer.email, role: ROLE.CUSTOMER },
-      Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400
-    );
+    const token = generateSignature({ _id: customer._id, role: ROLE.CUSTOMER }, Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400);
 
     return apiResponse(true, 200, "Customer logged in successfully!", { token });
   }
@@ -39,10 +36,7 @@ export const POST = asyncHandler(CustomerLoginSchema, async (_, data: z.infer<ty
   const isPasswordValid = await bcrypt.compare(String(password), customer.password);
   if (!isPasswordValid) return apiResponse(false, 401, "Invalid password!");
 
-  const token = generateSignature(
-    { _id: customer._id, email: customer.email, role: ROLE.CUSTOMER },
-    Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400
-  );
+  const token = generateSignature({ _id: customer._id, role: ROLE.CUSTOMER }, Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400);
 
   return apiResponse(true, 200, "Customer logged in successfully!", { token });
 });

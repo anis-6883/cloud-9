@@ -8,7 +8,7 @@ import z from "zod";
 
 // Get admin profile
 export const GET = asyncHandler(async (req: NextRequest) => {
-  const admin = await Admin.findOne({ _id: req.user?._id }).select("-password -updatedAt");
+  const admin = await Admin.findOne({ _id: req.userId }).select("-password -updatedAt");
 
   return apiResponse(true, 200, "Admin profile fetched successfully!", admin);
 }, true);
@@ -21,13 +21,13 @@ export const PUT = asyncHandler(
       const isExist = await TempFile.findOne({ key: data.image.publicId });
 
       if (isExist) {
-        const [admin] = await Promise.all([Admin.findById(req.user._id), TempFile.deleteOne({ key: data.image.publicId })]);
+        const [admin] = await Promise.all([Admin.findById(req.userId), TempFile.deleteOne({ key: data.image.publicId })]);
 
         if (admin?.image?.publicId) await deleteFromCloudinary(admin.image.publicId);
       }
     }
 
-    await Admin.findByIdAndUpdate(req.user._id, data);
+    await Admin.findByIdAndUpdate(req.userId, data);
 
     return apiResponse(true, 200, "Admin profile updated successfully!");
   },
