@@ -88,6 +88,7 @@ export const authOptions: NextAuthOptions = {
           const formData = new FormData();
           formData.append("email", credentials.email);
           formData.append("password", credentials.password);
+          formData.append("provider", "email");
 
           const res = await handleCustomerLogin(formData);
 

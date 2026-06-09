@@ -3,7 +3,7 @@ import { handleCustomerOtpVerify, handleCustomerRegister } from "@/actions/custo
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, X } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
@@ -200,16 +200,47 @@ function RegisterForm({ onSuccess, onSwitchMode }: { onSuccess: (email: string, 
 function OtpForm({ email, password, onSuccess, onBack }: { email: string; password: string; onSuccess: () => void; onBack: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
+  const inputRefs = Array(6)
+    .fill(null)
+    .map(() => useRef<HTMLInputElement>(null));
 
-  const methods = useForm<OtpFormData>({
-    resolver: zodResolver(otpSchema),
-    defaultValues: { otp: "" }
-  });
+  const handleChange = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return;
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+    if (value && index < 5) inputRefs[index + 1].current?.focus();
+  };
 
-  const onSubmit = async (data: OtpFormData) => {
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs[index - 1].current?.focus();
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    const newOtp = Array(6).fill("");
+    text.split("").forEach((char, i) => {
+      newOtp[i] = char;
+    });
+    setOtp(newOtp);
+    const nextEmpty = newOtp.findIndex(v => !v);
+    inputRefs[nextEmpty === -1 ? 5 : nextEmpty].current?.focus();
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const otpValue = otp.join("");
+    if (otpValue.length !== 6) {
+      setError("Please enter the complete 6-digit OTP");
+      return;
+    }
     setIsLoading(true);
     setError(null);
-    const res = await handleCustomerOtpVerify({ email, otp: data.otp });
+    const res = await handleCustomerOtpVerify({ email, otp: otpValue });
     if (!res.status) {
       setIsLoading(false);
       setError(res.error || "Invalid OTP. Please try again.");
@@ -225,48 +256,58 @@ function OtpForm({ email, password, onSuccess, onBack }: { email: string; passwo
     if (loginRes?.error) {
       setError("Verified! Please login manually.");
     } else {
+      import("react-hot-toast").then(({ default: toast }) => {
+        toast.success("Email verified successfully! Welcome aboard");
+      });
       onSuccess();
     }
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
-        <CardContent className='space-y-4 pt-4'>
-          <InputField
-            name='otp'
-            label='OTP Code'
-            type='text'
-            placeholder='Enter 6-digit OTP'
-            inputClassName='bg-white text-black tracking-widest text-center text-lg'
-          />
-          {error && <div className='p-3 bg-destructive/10 border border-destructive/30 rounded-lg text-destructive text-sm'>{error}</div>}
+    <form onSubmit={onSubmit} noValidate>
+      <CardContent className='space-y-6 pt-4'>
+        <div className='flex items-center justify-center gap-3'>
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              ref={inputRefs[index]}
+              type='text'
+              inputMode='numeric'
+              maxLength={1}
+              value={digit}
+              onChange={e => handleChange(index, e.target.value)}
+              onKeyDown={e => handleKeyDown(index, e)}
+              onPaste={handlePaste}
+              className='w-12 h-14 text-center text-xl font-bold border-2 rounded-xl bg-white text-black border-border focus:border-accent focus:outline-none transition-colors'
+            />
+          ))}
+        </div>
+        {error && <div className='p-3 bg-destructive/10 border border-destructive/30 rounded-lg text-destructive text-sm'>{error}</div>}
+        <button
+          type='submit'
+          disabled={isLoading || otp.join("").length !== 6}
+          className='w-full bg-accent hover:bg-accent/90 disabled:bg-accent/50 text-accent-foreground font-semibold py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer'
+        >
+          {isLoading ? (
+            <>
+              <Loader2 size={18} className='animate-spin' /> Verifying...
+            </>
+          ) : (
+            "Verify OTP"
+          )}
+        </button>
+        <p className='text-center text-sm text-muted-foreground'>
+          Wrong email?{" "}
           <button
-            type='submit'
-            disabled={isLoading}
-            className='w-full bg-accent hover:bg-accent/90 disabled:bg-accent/50 text-accent-foreground font-semibold py-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer'
+            type='button'
+            onClick={onBack}
+            className='text-accent hover:text-accent/80 font-semibold transition-colors cursor-pointer'
           >
-            {isLoading ? (
-              <>
-                <Loader2 size={18} className='animate-spin' /> Verifying...
-              </>
-            ) : (
-              "Verify OTP"
-            )}
+            Go back
           </button>
-          <p className='text-center text-sm text-muted-foreground'>
-            Wrong email?{" "}
-            <button
-              type='button'
-              onClick={onBack}
-              className='text-accent hover:text-accent/80 font-semibold transition-colors cursor-pointer'
-            >
-              Go back
-            </button>
-          </p>
-        </CardContent>
-      </form>
-    </FormProvider>
+        </p>
+      </CardContent>
+    </form>
   );
 }
 
