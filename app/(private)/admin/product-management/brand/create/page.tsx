@@ -1,7 +1,9 @@
-export default function ProductCreate() {
+import ProductForm from "@/components/admin/product/ProductForm";
+
+export default function CreateProductPage() {
   return (
-    <div>
-      <p>Producat Create</p>
+    <div className='p-4'>
+      <ProductForm />
     </div>
   );
 }

@@ -97,6 +97,13 @@ const apiRoutes = {
           update: (id: string) => `/api/admin/category/${id}`,
           delete: (id: string) => `/api/admin/category/${id}`,
           sort: `/api/admin/category/sort`
+        },
+        product: {
+          get: `/api/admin/product`,
+          getById: (id: string) => `/api/admin/product/${id}`,
+          create: `/api/admin/product`,
+          update: (id: string) => `/api/admin/product/${id}`,
+          delete: (id: string) => `/api/admin/product/${id}`
         }
       }
     },

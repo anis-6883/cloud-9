@@ -41,3 +41,25 @@ export type ProductCategory = {
   subCategories?: ProductCategory[];
   totalProducts?: number;
 };
+
+export type Product = {
+  _id: string;
+  name: string;
+  image: { publicId: string; secureUrl: string };
+  shortDesc: string;
+  price: number;
+  hasDiscount: boolean;
+  discountPctAmount?: number;
+  discountPrice?: number;
+  status: boolean;
+  createdAt: string;
+};
+
+export type ProductPagination = {
+  page: number;
+  limit: number;
+  totalPage: number;
+  totalDocs: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+};
