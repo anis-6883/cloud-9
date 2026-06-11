@@ -75,6 +75,40 @@ const CheckoutSchema = z.object({
     .nonempty()
 });
 
+// Update Order Status Schema
+const UpdateOrderStatusZodSchema = z
+  .object({
+    status: stringField({ required: true, enum: Object.values(ORDER_STATUS).filter(s => s !== ORDER_STATUS.PENDING) }),
+    cancelledBy: stringField({ enum: Object.values(CANCELLED_BY) }),
+    cancellationReason: stringField({ minLength: 5, maxLength: 500 })
+  })
+  .superRefine((data, ctx) => {
+    if (data.status === ORDER_STATUS.CANCELLED) {
+      if (!data.cancelledBy) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["cancelledBy"],
+          message: "cancelledBy is required when status is cancelled"
+        });
+      } else if (!Object.values(CANCELLED_BY).includes(data?.cancelledBy as any)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["cancelledBy"],
+          message: "Invalid cancelledBy value"
+        });
+      }
+
+      const cancellationReason = data.cancellationReason as string | undefined;
+      if (!cancellationReason || cancellationReason.trim().length === 0) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["cancellationReason"],
+          message: "cancellationReason is required when status is cancelled"
+        });
+      }
+    }
+  });
+
 // Export
-export { CheckoutSchema, Order };
+export { CheckoutSchema, Order, UpdateOrderStatusZodSchema };
 export type { IOrder };
