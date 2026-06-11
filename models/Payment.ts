@@ -16,7 +16,6 @@ export interface IPayment extends Document {
   refundStatus?: REFUND_STATUS;
   refundAmount?: number;
   refundedAt?: Date;
-  refundReason?: string;
 }
 
 // Payment Model
@@ -31,8 +30,7 @@ const PaymentSchema: Schema = new mongoose.Schema(
     anyRefund: { type: Boolean, default: false },
     refundStatus: { type: String, enum: Object.values(REFUND_STATUS) },
     refundAmount: { type: Number, default: 0 },
-    refundedAt: { type: Date },
-    refundReason: { type: String, trim: true }
+    refundedAt: { type: Date }
   },
   {
     timestamps: true,

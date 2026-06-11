@@ -63,8 +63,7 @@ export const POST = asyncHandler(
       order: order._id,
       amount: totalAmount,
       method: paymentMethod,
-      status: PAYMENT_STATUS.PENDING,
-      paidAt: new Date()
+      status: PAYMENT_STATUS.PENDING
     });
 
     return apiResponse(true, 201, "Checkout successfully completed!");
