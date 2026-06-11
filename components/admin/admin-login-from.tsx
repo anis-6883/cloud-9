@@ -88,7 +88,8 @@ export default function AdminLoginForm() {
             <InputField name='password' label='Password' type='password' placeholder='admin123' inputClassName='bg-transparent' />
 
             <div className='text-xs text-slate-400 font-medium text-center -mt-1 pb-1'>
-              Demo Access: <span className='text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.5 rounded'>admin@gmail.com</span> / <span className='text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.5 rounded'>admin123</span>
+              Demo Access: <span className='text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.5 rounded'>admin@gmail.com</span> /{" "}
+              <span className='text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.5 rounded'>admin123</span>
             </div>
 
             {error && <div className='text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg p-2'>{error}</div>}

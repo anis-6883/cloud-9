@@ -20,7 +20,13 @@ export const POST = asyncHandler(CustomerRegisterSchema, async (_, data: z.infer
 
   // Check if customer already exists
   const existingCustomer = await Customer.findOne({ email });
-  if (existingCustomer) return apiResponse(false, 409, "Customer already exists with this email!");
+  if (existingCustomer?.isEmailVerified) return apiResponse(false, 409, "Customer already exists with this email!");
+
+  // If customer exists but email not verified, delete existing OTPs and customer record to allow fresh registration
+  if (existingCustomer && !existingCustomer.isEmailVerified) {
+    await Otp.deleteMany({ email });
+    await Customer.deleteOne({ _id: existingCustomer._id });
+  }
 
   // Google provider registration
   if (provider === "google") {
@@ -40,10 +46,7 @@ export const POST = asyncHandler(CustomerRegisterSchema, async (_, data: z.infer
       image: payload.picture ? { publicId: "", secureUrl: payload.picture } : undefined
     });
 
-    const token = generateSignature(
-      { _id: customer._id, email: customer.email, role: ROLE.CUSTOMER },
-      Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400
-    );
+    const token = generateSignature({ _id: customer._id, role: ROLE.CUSTOMER }, Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400);
 
     return apiResponse(true, 201, "Customer registered successfully!", { token });
   }
@@ -69,10 +72,7 @@ export const POST = asyncHandler(CustomerRegisterSchema, async (_, data: z.infer
   // Send OTP email
   await mailService.sendOtp(email as string, otp, { expiryMinutes: OTP_CONFIG.EXPIRY_MINUTES });
 
-  const token = generateSignature(
-    { _id: customer._id, email: customer.email, role: ROLE.CUSTOMER },
-    Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400
-  );
+  const token = generateSignature({ _id: customer._id, role: ROLE.CUSTOMER }, Number(process.env.JWT_ACCESS_TOKEN_TTL) || 86400);
 
   return apiResponse(true, 201, "OTP sent to your email. Please verify to activate your account!");
 });
