@@ -1,11 +1,18 @@
+import { getCustomers } from "@/actions/admin/user-management/customer-actions";
+import CustomerTable from "@/components/admin/customer/CustomerTable";
 import BreadcrumbWrapper from "@/components/shared/BreadcrumbWrapper";
 import { Button } from "@/components/ui/button";
 import { Plus, Users } from "lucide-react";
 import Link from "next/link";
-export default function CustomerPage() {
+
+export default async function CustomerPage() {
+  const res = await getCustomers();
+  const data = res?.data || [];
+  const total = data.length;
+
   return (
     <BreadcrumbWrapper
-      title='Manage Products'
+      title='Manage Customers'
       description='Organize and manage your customers'
       titleIcon={<Users className='text-xl' />}
       addBtn={
@@ -17,7 +24,7 @@ export default function CustomerPage() {
         </Link>
       }
     >
-      <p>Customers</p>
+      <CustomerTable data={data} total={total} />
     </BreadcrumbWrapper>
   );
 }

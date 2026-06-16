@@ -1,7 +1,9 @@
-export default function CusotmerCreatePage() {
+import CustomerForm from "@/components/admin/customer/CustomerForm";
+
+export default function CustomerCreatePage() {
   return (
-    <div>
-      <p>Customer Create Page</p>
+    <div className='p-4'>
+      <CustomerForm />
     </div>
   );
 }
