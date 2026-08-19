@@ -63,3 +63,17 @@ export type ProductPagination = {
   hasNext: boolean;
   hasPrev: boolean;
 };
+
+export type Customer = {
+  _id: string;
+  name: string;
+  email: string;
+  provider: string;
+  isEmailVerified?: boolean;
+  image?: { publicId: string; secureUrl: string };
+  dialCode?: string;
+  phone?: string;
+  dob?: string;
+  status: boolean;
+  createdAt: string;
+};

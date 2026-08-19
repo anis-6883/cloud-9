@@ -43,6 +43,13 @@ const apiRoutes = {
         getSingleCustomer: (id: string) => `/api/v1/admin/customers/${id}`,
         getSingleCustomerOrders: (id: string) => `/api/v1/admin/customers/${id}/orders`
       },
+      manageCustomer: {
+        get: `/api/admin/manage-customer`,
+        getById: (id: string) => `/api/admin/manage-customer/${id}`,
+        create: `/api/admin/manage-customer`,
+        update: (id: string) => `/api/admin/manage-customer/${id}`,
+        delete: (id: string) => `/api/admin/manage-customer/${id}`
+      },
 
       offersManagement: {
         offersList: {

@@ -4,7 +4,7 @@ import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
 import { adminDashboardMenu } from "@/config/nav-config";
 import React from "react";
 // import useUserProfile from "@/store/useUserProfile";
-import { FileText, LayoutDashboard, Package, Settings, Utensils } from "lucide-react";
+import { FileText, LayoutDashboard, Package, Settings, Users, Utensils } from "lucide-react";
 import AppSidebarHeader from "./AppSidebarHeader";
 import NavMenuItems from "./NavMenuItems";
 
@@ -41,6 +41,12 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
       title: "Product",
       url: "/admin/product-management/brand",
       icon: Package
+    },
+
+    {
+      title: "Customer",
+      url: "/admin/user-management/customer",
+      icon: Users
     },
     // },
     // {
